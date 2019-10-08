@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
@@ -20,12 +21,12 @@ import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
 public class StackRemoteFactory implements RemoteViewsService.RemoteViewsFactory {
-    private static final String BASE_URL = "https://image.tmdb.org/t/p/w185";
+    private static final String BASE_URL = "https://image.tmdb.org/t/p/w500";
     private Context mContext;
     private Cursor c;
     MovieDbHelper dbHelper;
     SQLiteDatabase moviedb;
-    ArrayList<Movie> data;
+    ArrayList<Movie> data = new ArrayList<>();
 
     public StackRemoteFactory(Context context, Intent intent){
         mContext = context;
@@ -38,6 +39,10 @@ public class StackRemoteFactory implements RemoteViewsService.RemoteViewsFactory
         moviedb = dbHelper.getWritableDatabase();
         itemMovie = MovieTable.getAllMovies(moviedb);
 
+        for (int i = 0; i < itemMovie.size(); i ++){
+            Log.d("test din", itemMovie.get(i).getJudulFilm());
+        }
+
         for (int i = 0; i < itemMovie.size(); i++){
             Movie movie = new Movie(
                     itemMovie.get(i).getId(),
@@ -48,14 +53,6 @@ public class StackRemoteFactory implements RemoteViewsService.RemoteViewsFactory
             data.add(movie);
         }
 
-//        c = mContext.getContentResolver().query(
-//                Uri.parse("content://com.example.moviecatalog5/movie"),
-//                null,
-//                null,
-//                null,
-//                null
-//        );
-
     }
 
     private Movie getMovieItem(int index){
@@ -64,6 +61,7 @@ public class StackRemoteFactory implements RemoteViewsService.RemoteViewsFactory
                 data.get(index).getJudulFilm(),
                 data.get(index).getRatingFilm(),
                 data.get(index).getPosterPath());
+        Log.d("hasil path ",result.getPosterPath());
         return result;
     }
 
@@ -84,29 +82,34 @@ public class StackRemoteFactory implements RemoteViewsService.RemoteViewsFactory
 
     @Override
     public RemoteViews getViewAt(int position) {
-        Movie res = getMovieItem(position);
+        String imagePath = getMovieItem(position).getPosterPath();
         RemoteViews remoteViews = new RemoteViews(mContext.getPackageName(), R.layout.widget_item);
 
         Bitmap bitmap = null;
         try {
             bitmap = Glide.with(mContext)
                     .asBitmap()
-                    .load(BASE_URL + res.getPosterPath())
-                    .into(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
+                    .load(BASE_URL + imagePath)
+                    .submit()
                     .get();
-        } catch (InterruptedException e){
-            e.printStackTrace();
-        } catch (ExecutionException e){
-            e.printStackTrace();
+            Log.d("test din lagi ", BASE_URL+imagePath);
+        } catch (Exception e){
+            Log.d("interruption1", e.getMessage());
+       }
+        //catch ( e){
+//            Log.d("interruption2", e.getMessage());
+//            //e.printStackTrace();
+//        }
+        if (bitmap == null){
+            Log.d("din error", BASE_URL + imagePath);
+        } else {
+            remoteViews.setImageViewBitmap(R.id.imageView, bitmap);
         }
-
-        remoteViews.setImageViewBitmap(R.id.imageView, bitmap);
 
         Bundle extra = new Bundle();
         extra.putInt(FavMoviesWidget.EXTRA_ITEM, position);
         Intent fillIntent = new Intent();
         fillIntent.putExtras(extra);
-
         remoteViews.setOnClickFillInIntent(R.id.imageView, fillIntent);
         return remoteViews;
         //return null;

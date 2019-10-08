@@ -3,6 +3,7 @@
     package="com.example.moviecatalog5">
 
     <permission android:name="com.example.moviecatalog5.MOVIE_PROVIDER"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
         android:allowBackup="true"
