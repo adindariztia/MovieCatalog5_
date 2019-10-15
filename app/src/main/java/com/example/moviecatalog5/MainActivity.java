@@ -110,13 +110,17 @@ public class MainActivity extends AppCompatActivity
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                movieViewModel.setMovie();
-                movieViewModel.getMovies().observe(MainActivity.this, getMovie);
-                movieAdapter = new MovieAdapter(MainActivity.this);
-                rvMovies.setAdapter(movieAdapter);
-                showLoading(true);
+                if (!newText.isEmpty()) {
+                    movieViewModel.setMovie();
+                    movieViewModel.getMovies().observe(MainActivity.this, getMovie);
+                    movieAdapter = new MovieAdapter(MainActivity.this);
+                    rvMovies.setAdapter(movieAdapter);
+                    showLoading(true);
+                }
                 return true;
+
             }
+
         });
     }
 

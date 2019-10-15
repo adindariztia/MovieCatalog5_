@@ -69,11 +69,13 @@ public class TvShowActivity extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                tvShowViewModel.setShow();
-                tvShowViewModel.getShows().observe(TvShowActivity.this, getShow);
-                tvShowAdapter = new TvShowAdapter(TvShowActivity.this);
-                rvShow.setAdapter(tvShowAdapter);
-                showLoading(true);
+                if (!newText.isEmpty()){
+                    tvShowViewModel.setShow();
+                    tvShowViewModel.getShows().observe(TvShowActivity.this, getShow);
+                    tvShowAdapter = new TvShowAdapter(TvShowActivity.this);
+                    rvShow.setAdapter(tvShowAdapter);
+                    showLoading(true);
+                }
 
                 return true;
             }
