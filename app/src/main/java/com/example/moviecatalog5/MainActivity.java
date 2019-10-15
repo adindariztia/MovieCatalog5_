@@ -73,14 +73,29 @@ public class MainActivity extends AppCompatActivity
 
         searchView = findViewById(R.id.search_view);
 
-
-        movieViewModel.setMovie();
-        movieViewModel.getMovies().observe(this, getMovie);
-
         rvMovies.setLayoutManager(new LinearLayoutManager(this));
         movieAdapter = new MovieAdapter(this);
         rvMovies.setAdapter(movieAdapter);
         showLoading(true);
+
+        if (savedInstanceState == null){
+            movieViewModel.setMovie();
+            showLoading(true);
+
+        }
+        movieViewModel.getMovies().observe(this, new Observer<ArrayList<Movie>>() {
+            @Override
+            public void onChanged(@Nullable ArrayList<Movie> movies) {
+                if(movies != null){
+                    movieAdapter.setData(movies);
+                    showLoading(false);
+                }
+            }
+        });
+
+
+
+
 
         searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
             @Override
@@ -104,6 +119,7 @@ public class MainActivity extends AppCompatActivity
             }
         });
     }
+
 
     private Observer<ArrayList<Movie>> getMovie = new Observer<ArrayList<Movie>>() {
         @Override
