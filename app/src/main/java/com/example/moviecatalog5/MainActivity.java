@@ -48,16 +48,10 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        FloatingActionButton fab = findViewById(R.id.fab);
+
 
         toolbar.setTitleTextColor(Color.parseColor("#FFFFFF"));
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -198,7 +192,11 @@ public class MainActivity extends AppCompatActivity
         }else if (id == R.id.nav_fav_tv_show) {
             Intent intent = new Intent(this, FavTvShowActivity.class);
             startActivity(intent);
+        } else if (id ==R.id.nav_setting){
+            Intent intent = new Intent(this, NotificationSettingActivity.class);
+            startActivity(intent);
         }
+
 
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);

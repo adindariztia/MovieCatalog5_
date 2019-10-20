@@ -2,8 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.moviecatalog5">
 
-    <permission android:name="com.example.moviecatalog5.MOVIE_PROVIDER"/>
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <permission android:name="com.example.moviecatalog5.MOVIE_PROVIDER" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -12,12 +13,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".NotificationSettingActivity"></activity>
+
         <provider
-            android:permission="com.example.moviecatalog5.MOVIE_PROVIDER"
             android:name=".providers.MovieProvider"
             android:authorities="com.example.moviecatalog5"
             android:enabled="true"
-            android:exported="true"></provider>
+            android:exported="true"
+            android:permission="com.example.moviecatalog5.MOVIE_PROVIDER" />
 
         <receiver android:name=".FavMoviesWidget">
             <intent-filter>
@@ -44,9 +47,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        
-        <service android:name="com.example.moviecatalog5.StackWidgetService"
-            android:permission="android.permission.BIND_REMOTEVIEWS"/>
+
+        <service
+            android:name=".StackWidgetService"
+            android:permission="android.permission.BIND_REMOTEVIEWS" />
     </application>
 
 </manifest>
