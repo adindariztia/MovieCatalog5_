@@ -22,4 +22,7 @@
     <string name="favorite_tv_show">Favorite TV Show</string>
     <string name="appwidget_text">EXAMPLE</string>
     <string name="add_widget">Add widget</string>
+    <string name="notification_intro">Activate Daily Reminder to receive notification of your beloved Movie Catalog everyday.
+        \nActivate Release Today reminder to receive notification of freshly release movies.
+        \nDon\'t worry, you can disable anytime!</string>
 </resources>
