@@ -59,8 +59,8 @@ public class AlarmReceiver extends BroadcastReceiver {
         intent.putExtra(EXTRA_TYPE, type);
 
         Calendar calendarDailyReminder = Calendar.getInstance();
-        calendarDailyReminder.set(Calendar.HOUR_OF_DAY, 15);
-        calendarDailyReminder.set(Calendar.MINUTE, 54);
+        calendarDailyReminder.set(Calendar.HOUR_OF_DAY, 7);
+        calendarDailyReminder.set(Calendar.MINUTE, 0);
         calendarDailyReminder.set(Calendar.SECOND, 0);
 
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, ID_DAILY_REMINDER, intent, 0);
@@ -78,8 +78,8 @@ public class AlarmReceiver extends BroadcastReceiver {
         intent.putExtra(EXTRA_TYPE, type);
 
         Calendar calendarReleaseReminder = Calendar.getInstance();
-        calendarReleaseReminder.set(Calendar.HOUR_OF_DAY, 15);
-        calendarReleaseReminder.set(Calendar.MINUTE, 55);
+        calendarReleaseReminder.set(Calendar.HOUR_OF_DAY, 8);
+        calendarReleaseReminder.set(Calendar.MINUTE, 0);
         calendarReleaseReminder.set(Calendar.SECOND, 0);
 
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, ID_RELEASE_REMINDER, intent, 0);
