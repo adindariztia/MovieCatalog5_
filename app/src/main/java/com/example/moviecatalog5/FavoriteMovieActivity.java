@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
 import com.example.moviecatalog5.ViewModel.FavMovieViewModel;
+import com.example.moviecatalog5.adapter.FavMovieAdapter;
 import com.example.moviecatalog5.adapter.MovieAdapter;
 import com.example.moviecatalog5.db.MovieDbHelper;
 import com.example.moviecatalog5.db.tables.MovieTable;
@@ -20,7 +21,7 @@ import java.util.ArrayList;
 
 public class FavoriteMovieActivity extends AppCompatActivity {
     RecyclerView rvMain;
-    MovieAdapter movieAdapter;
+    FavMovieAdapter favMovieAdapter;
     FavMovieViewModel favMovieViewModel;
 
     @Override
@@ -36,15 +37,15 @@ public class FavoriteMovieActivity extends AppCompatActivity {
 
 
         rvMain.setLayoutManager(new LinearLayoutManager(this));
-        movieAdapter = new MovieAdapter(this);
-        rvMain.setAdapter(movieAdapter);
+        favMovieAdapter = new FavMovieAdapter(this);
+        rvMain.setAdapter(favMovieAdapter);
 
     }
     private Observer<ArrayList<Movie>> getMovieObserver = new Observer<ArrayList<Movie>>() {
         @Override
         public void onChanged(@Nullable ArrayList<Movie> movies) {
             if(movies != null){
-                movieAdapter.setData(movies);
+                favMovieAdapter.setData(movies);
 
             }
         }

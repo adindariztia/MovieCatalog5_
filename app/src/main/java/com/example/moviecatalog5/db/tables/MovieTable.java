@@ -18,6 +18,7 @@ import static com.example.moviecatalog5.db.Const.SEMICOLON;
 import static com.example.moviecatalog5.db.Const.TYPE_INT;
 import static com.example.moviecatalog5.db.Const.TYPE_REAL;
 import static com.example.moviecatalog5.db.Const.TYPE_TEXT;
+import static com.example.moviecatalog5.db.tables.MovieTable.Columns.ID;
 
 public class MovieTable {
     public static final String TABLE_NAME = "movie";
@@ -33,7 +34,7 @@ public class MovieTable {
     public static final String CMD_CREATE =
             CMD_CREATE_TABLE_IF_NOT_EXIST + TABLE_NAME
                 + LEFT_BRACKET
-                    + Columns.ID + TYPE_INT + PRIMARY_KEY + COMA
+                    + ID + TYPE_INT + PRIMARY_KEY + COMA
                     + Columns.JUDUL_FILM + TYPE_TEXT + COMA
                     + Columns.RATING_FILM + TYPE_REAL + COMA
                     + Columns.POSTER_FILM + TYPE_TEXT
@@ -42,7 +43,7 @@ public class MovieTable {
 
     public static long addMovie(SQLiteDatabase db, Movie movie){
         ContentValues movieRow = new ContentValues();
-        movieRow.put(Columns.ID, movie.getId());
+        movieRow.put(ID, movie.getId());
         movieRow.put(Columns.JUDUL_FILM, movie.getJudulFilm());
         movieRow.put(Columns.RATING_FILM, movie.getRatingFilm());
         movieRow.put(Columns.POSTER_FILM, movie.getPosterPath());
@@ -50,11 +51,19 @@ public class MovieTable {
         return db.insert(TABLE_NAME, null, movieRow);
     }
 
+    public static boolean deleteMovie(SQLiteDatabase db, int id){
+        if (db.delete(TABLE_NAME, ID + "=" + id, null ) > 0){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public static ArrayList<Movie> getAllMovies(SQLiteDatabase db){
         ArrayList<Movie> movieArrayList = new ArrayList<>();
         Cursor c = db.query(
                 TABLE_NAME,
-                new String[] {Columns.ID, Columns.JUDUL_FILM, Columns.RATING_FILM, Columns.POSTER_FILM},
+                new String[] {ID, Columns.JUDUL_FILM, Columns.RATING_FILM, Columns.POSTER_FILM},
                 null, null, null, null, null
         );
         while (c.moveToNext()){
@@ -71,7 +80,7 @@ public class MovieTable {
     public static Cursor getAllMovieCursor(SQLiteDatabase db){
         return db.query(
                 TABLE_NAME,
-                new String[] {Columns.ID, Columns.JUDUL_FILM, Columns.RATING_FILM, Columns.POSTER_FILM},
+                new String[] {ID, Columns.JUDUL_FILM, Columns.RATING_FILM, Columns.POSTER_FILM},
                 null, null, null, null, null
         );
     }

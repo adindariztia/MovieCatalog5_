@@ -17,6 +17,7 @@ import static com.example.moviecatalog5.db.Const.SEMICOLON;
 import static com.example.moviecatalog5.db.Const.TYPE_INT;
 import static com.example.moviecatalog5.db.Const.TYPE_REAL;
 import static com.example.moviecatalog5.db.Const.TYPE_TEXT;
+import static com.example.moviecatalog5.db.tables.TvShowTable.Columns.ID;
 
 public class TvShowTable {
     public static final String TABLE_NAME = "tvshow";
@@ -30,7 +31,7 @@ public class TvShowTable {
     public static final String CMD_CREATE =
             CMD_CREATE_TABLE_IF_NOT_EXIST + TABLE_NAME
                 + LEFT_BRACKET
-                    + Columns.ID + TYPE_TEXT + PRIMARY_KEY + COMA
+                    + ID + TYPE_TEXT + PRIMARY_KEY + COMA
                     + Columns.JUDUL_SHOW + TYPE_TEXT + COMA
                     + Columns.RATING_SHOW + TYPE_REAL + COMA
                     + Columns.POSTER + TYPE_TEXT
@@ -39,7 +40,7 @@ public class TvShowTable {
 
     public static long addTvShow(SQLiteDatabase db, TvShow show){
         ContentValues tvShow = new ContentValues();
-        tvShow.put(Columns.ID, show.getId());
+        tvShow.put(ID, show.getId());
         tvShow.put(Columns.JUDUL_SHOW, show.getJudulShow());
         tvShow.put(Columns.RATING_SHOW, show.getRatingShow());
         tvShow.put(Columns.POSTER, show.getPosterShow());
@@ -47,11 +48,19 @@ public class TvShowTable {
         return db.insert(TABLE_NAME, null, tvShow);
     }
 
+    public static boolean deleteMovie(SQLiteDatabase db, int id){
+        if (db.delete(TABLE_NAME, ID + "=" + id, null ) > 0){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public static ArrayList<TvShow> getAllTvShows(SQLiteDatabase db){
         ArrayList<TvShow> tvShowArrayList = new ArrayList<>();
         Cursor c = db.query(
                 TABLE_NAME,
-                new String[] {Columns.ID, Columns.JUDUL_SHOW, Columns.RATING_SHOW, Columns.POSTER},
+                new String[] {ID, Columns.JUDUL_SHOW, Columns.RATING_SHOW, Columns.POSTER},
                 null, null, null, null, null
         );
         while (c.moveToNext()){
@@ -68,7 +77,7 @@ public class TvShowTable {
     public static Cursor getAllTvShowCursor(SQLiteDatabase db){
         return db.query(
                 TABLE_NAME,
-                new String[] {Columns.ID, Columns.JUDUL_SHOW, Columns.RATING_SHOW, Columns.POSTER},
+                new String[] {ID, Columns.JUDUL_SHOW, Columns.RATING_SHOW, Columns.POSTER},
                 null, null, null, null, null
         );
     }

@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 
 import com.example.moviecatalog5.ViewModel.FavMovieViewModel;
 import com.example.moviecatalog5.ViewModel.FavTvShowViewModel;
+import com.example.moviecatalog5.adapter.FavTvShowAdapter;
 import com.example.moviecatalog5.adapter.MovieAdapter;
 import com.example.moviecatalog5.adapter.TvShowAdapter;
 import com.example.moviecatalog5.model.Movie;
@@ -20,7 +21,7 @@ import java.util.ArrayList;
 
 public class FavTvShowActivity extends AppCompatActivity {
     RecyclerView rvMain;
-    TvShowAdapter tvShowAdapter;
+    FavTvShowAdapter favTvShowAdapter;
     FavTvShowViewModel favTvShowViewModel;
 
     @Override
@@ -34,15 +35,15 @@ public class FavTvShowActivity extends AppCompatActivity {
 
         rvMain = findViewById(R.id.rv_main);
         rvMain.setLayoutManager(new LinearLayoutManager(this));
-        tvShowAdapter = new TvShowAdapter(this);
-        rvMain.setAdapter(tvShowAdapter);
+        favTvShowAdapter = new FavTvShowAdapter(this);
+        rvMain.setAdapter(favTvShowAdapter);
 
     }
     private Observer<ArrayList<TvShow>> getTvShowObserver = new Observer<ArrayList<TvShow>>() {
         @Override
         public void onChanged(@Nullable ArrayList<TvShow> shows) {
             if(shows != null){
-                tvShowAdapter.setData(shows);
+                favTvShowAdapter.setData(shows);
 
             }
         }
