@@ -67,14 +67,14 @@ public class FavMoviesWidget extends AppWidgetProvider {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-
+        super.onReceive(context, intent);
         if (intent.getAction() != null){
             if (intent.getAction().equals(TOAST_ACTION)){
                 int viewIndex = intent.getIntExtra(EXTRA_ITEM, 0);
                 Toast.makeText(context, "view : " + viewIndex, Toast.LENGTH_SHORT).show();
             }
         }
-        super.onReceive(context, intent);
+
     }
 }
 

@@ -83,28 +83,39 @@ public class StackRemoteFactory implements RemoteViewsService.RemoteViewsFactory
     @Override
     public RemoteViews getViewAt(int position) {
         String imagePath = getMovieItem(position).getPosterPath();
+        Log.d("masuk getView", String.valueOf(position));
         RemoteViews remoteViews = new RemoteViews(mContext.getPackageName(), R.layout.widget_item);
 
-        Bitmap bitmap = null;
-        try {
-            bitmap = Glide.with(mContext)
-                    .asBitmap()
-                    .load(BASE_URL + imagePath)
-                    .submit()
-                    .get();
-            Log.d("test din lagi ", BASE_URL+imagePath);
+//        Bitmap bitmap = null;
+//        try {
+//            bitmap = Glide.with(mContext)
+//                    .asBitmap()
+//                    .load(BASE_URL + imagePath)
+//                    .submit()
+//                    .get();
+//            Log.d("test din lagi ", BASE_URL+imagePath);
+        try{
+        Bitmap bitmap = Glide.with(mContext)
+                .asBitmap()
+                .load(imagePath)
+                .submit(150,100)
+                .get();
+        remoteViews.setImageViewBitmap(R.id.imageView, bitmap);
+
+        Log.d("hasil bitmap",imagePath);
+
         } catch (Exception e){
             Log.d("interruption1", e.getMessage());
-       }
+        }
         //catch ( e){
 //            Log.d("interruption2", e.getMessage());
 //            //e.printStackTrace();
 //        }
-        if (bitmap == null){
-            Log.d("din error", BASE_URL + imagePath);
-        } else {
-            remoteViews.setImageViewBitmap(R.id.imageView, bitmap);
-        }
+//        if (bitmap == null){
+//            Log.d("din error", BASE_URL + imagePath);
+//        } else {
+//            remoteViews.setImageViewBitmap(R.id.imageView, bitmap);
+//        }
 
         Bundle extra = new Bundle();
         extra.putInt(FavMoviesWidget.EXTRA_ITEM, position);
