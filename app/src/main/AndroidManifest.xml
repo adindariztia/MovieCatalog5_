@@ -56,7 +56,7 @@
         </activity>
 
         <service
-            android:name=".StackWidgetService"
+            android:name="com.example.moviecatalog5.StackWidgetService"
             android:permission="android.permission.BIND_REMOTEVIEWS" />
     </application>
 

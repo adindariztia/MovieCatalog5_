@@ -40,7 +40,7 @@ public class StackRemoteFactory implements RemoteViewsService.RemoteViewsFactory
         itemMovie = MovieTable.getAllMovies(moviedb);
 
         for (int i = 0; i < itemMovie.size(); i ++){
-            Log.d("test din", itemMovie.get(i).getJudulFilm());
+            //Log.d("test din", itemMovie.get(i).getJudulFilm());
         }
 
         for (int i = 0; i < itemMovie.size(); i++){
@@ -61,7 +61,7 @@ public class StackRemoteFactory implements RemoteViewsService.RemoteViewsFactory
                 data.get(index).getJudulFilm(),
                 data.get(index).getRatingFilm(),
                 data.get(index).getPosterPath());
-        Log.d("hasil path ",result.getPosterPath());
+        //Log.d("hasil path ",result.getPosterPath());
         return result;
     }
 
@@ -77,7 +77,7 @@ public class StackRemoteFactory implements RemoteViewsService.RemoteViewsFactory
 
     @Override
     public int getCount() {
-        return 0;
+        return data.size();
     }
 
     @Override
@@ -86,19 +86,13 @@ public class StackRemoteFactory implements RemoteViewsService.RemoteViewsFactory
         Log.d("masuk getView", String.valueOf(position));
         RemoteViews remoteViews = new RemoteViews(mContext.getPackageName(), R.layout.widget_item);
 
-//        Bitmap bitmap = null;
-//        try {
-//            bitmap = Glide.with(mContext)
-//                    .asBitmap()
-//                    .load(BASE_URL + imagePath)
-//                    .submit()
-//                    .get();
-//            Log.d("test din lagi ", BASE_URL+imagePath);
+
         try{
         Bitmap bitmap = Glide.with(mContext)
                 .asBitmap()
-                .load(imagePath)
-                .submit(150,100)
+                .load(BASE_URL + imagePath)
+
+                .submit()
                 .get();
         remoteViews.setImageViewBitmap(R.id.imageView, bitmap);
 
@@ -107,15 +101,6 @@ public class StackRemoteFactory implements RemoteViewsService.RemoteViewsFactory
         } catch (Exception e){
             Log.d("interruption1", e.getMessage());
         }
-        //catch ( e){
-//            Log.d("interruption2", e.getMessage());
-//            //e.printStackTrace();
-//        }
-//        if (bitmap == null){
-//            Log.d("din error", BASE_URL + imagePath);
-//        } else {
-//            remoteViews.setImageViewBitmap(R.id.imageView, bitmap);
-//        }
 
         Bundle extra = new Bundle();
         extra.putInt(FavMoviesWidget.EXTRA_ITEM, position);

@@ -35,7 +35,7 @@ public class FavMoviesWidget extends AppWidgetProvider {
 
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.fav_movies_widget);
         views.setRemoteAdapter(R.id.stack_view, intent);
-        views.setEmptyView(R.id.stack_view, R.id.banner_text);
+        views.setEmptyView(R.id.stack_view, R.id.empty_view);
 
         Intent toastIntent = new Intent(context, FavMoviesWidget.class);
         toastIntent.setAction(FavMoviesWidget.TOAST_ACTION);
